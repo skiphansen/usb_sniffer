@@ -1,0 +1,6 @@
+DATE = "21:19:03 June 18, 2018"
+QUARTUS_VERSION = "16.0.2"
+
+# Revisions
+
+PROJECT_REVISION = "fpga"
