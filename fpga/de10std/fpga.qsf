@@ -11,7 +11,7 @@ set_global_assignment -name PROJECT_CREATION_TIME_DATE "21:19:03 JUNE 18,2018"
 set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 896
 set_global_assignment -name DEVICE_FILTER_SPEED_GRADE FASTEST
-set_global_assignment -name SDC_FILE fpga.SDC
+set_global_assignment -name SDC_FILE fpga.sdc
 
 #============================================================
 # GPIO, GPIO connect to GPIO Default
