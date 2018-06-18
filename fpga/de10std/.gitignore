@@ -1,0 +1,16 @@
+*.cof
+*.done
+*.jdi
+*.jic
+*.map
+*.pin
+*.qdf
+*.qws
+*.rpt
+*.sld
+*.smsg
+*.sof
+*.summary
+/c5_pin_model_dump.txt
+/db/
+/incremental_db/
