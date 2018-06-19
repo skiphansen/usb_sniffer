@@ -49,6 +49,7 @@
 #include "log_file.h"
 #include "hw_interface.h"
 #include "ftdi_hw.h"
+#include "socket_hw.h"
 
 //-----------------------------------------------------------------
 // Defines:
@@ -208,11 +209,14 @@ int main(int argc, char *argv[])
             case 'i': // Hardware interface
                 if (strcmp(optarg, "ftdi") == 0)
                     hw_interface_ops = &ftdi_hw_ops;
+                else if (strcmp(optarg, "socket") == 0)
+                    hw_interface_ops = &socket_hw_ops;
                 else
                 {
                     fprintf (stderr,"ERROR: Incorrect hardware interface selection\n");
                     help = 1;
                 }
+                break;
             default:
                 help = 1;
                 break;
