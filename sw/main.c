@@ -47,6 +47,8 @@
 #include "usb_helpers.h"
 #include "usb_sniffer.h"
 #include "log_file.h"
+#include "hw_interface.h"
+#include "ftdi_hw.h"
 
 //-----------------------------------------------------------------
 // Defines:
@@ -168,7 +170,7 @@ int main(int argc, char *argv[])
     int inverse_match = 0;
     tUsbSpeed speed = USB_SPEED_HS;
     
-    while ((c = getopt (argc, argv, "d:e:slf:nu:")) != -1)
+    while ((c = getopt (argc, argv, "d:e:slf:nu:i:")) != -1)
     {
         switch(c)
         {
@@ -203,6 +205,14 @@ int main(int argc, char *argv[])
                     help = 1;
                 }
                 break;
+            case 'i': // Hardware interface
+                if (strcmp(optarg, "ftdi") == 0)
+                    hw_interface_ops = &ftdi_hw_ops;
+                else
+                {
+                    fprintf (stderr,"ERROR: Incorrect hardware interface selection\n");
+                    help = 1;
+                }
             default:
                 help = 1;
                 break;
@@ -219,6 +229,7 @@ int main(int argc, char *argv[])
         fprintf (stderr,"-s          - Disable SOF collection (breaks timing info)\n");
         fprintf (stderr,"-l          - One shot mode (stop on single buffer full)\n");
         fprintf (stderr,"-f          - Capture file to either .txt, .raw, .usb (default: capture.usb)\n");
+        fprintf (stderr,"-i ftdi|socket - Hardware interface\n");
         exit(-1);
     }
 

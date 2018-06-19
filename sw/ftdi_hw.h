@@ -2,6 +2,9 @@
 #define _FTDI_HW_H_
 
 #include <stdint.h>
+#include "hw_interface.h"
+
+extern struct hw_interface_ops ftdi_hw_ops;
 
 //-----------------------------------------------------------------
 // Defines:

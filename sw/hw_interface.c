@@ -37,24 +37,26 @@
 #include "hw_interface.h"
 #include "ftdi_hw.h"
 
+struct hw_interface_ops *hw_interface_ops = &ftdi_hw_ops;
+
 int hw_interface_init(void)
 {
-    return ftdi_hw_init();
+    return hw_interface_ops->interface_init();
 }
 
 int hw_interface_close(void)
 {
-    return ftdi_hw_close();
+    return hw_interface_ops->interface_close();
 }
 
 int hw_mem_write(uint32_t addr, uint8_t *data, int length)
 {
-    return ftdi_hw_mem_write(addr, data, length);
+    return hw_interface_ops->mem_write(addr, data, length);
 }
 
 int hw_mem_read(uint32_t addr, uint8_t *data, int length)
 {
-    return ftdi_hw_mem_read(addr, data, length);
+    return hw_interface_ops->mem_read(addr, data, length);
 }
 
 //-----------------------------------------------------------------

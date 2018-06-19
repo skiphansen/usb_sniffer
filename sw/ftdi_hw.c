@@ -279,3 +279,10 @@ int ftdi_hw_gpio_read(uint8_t *value)
 
     return 0;
 }
+
+struct hw_interface_ops ftdi_hw_ops = {
+    .interface_init = ftdi_hw_init,
+    .interface_close = ftdi_hw_close,
+    .mem_write = ftdi_hw_mem_write,
+    .mem_read = ftdi_hw_mem_read
+};
