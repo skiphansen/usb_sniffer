@@ -12,8 +12,11 @@
 *.sld
 *.smsg
 *.sof
+*.sopcinfo
 *.stp
 *.summary
+/.qsys_edit/
 /c5_pin_model_dump.txt
 /db/
 /incremental_db/
+/soc_system/
