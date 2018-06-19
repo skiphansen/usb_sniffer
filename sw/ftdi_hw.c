@@ -235,37 +235,6 @@ int ftdi_hw_mem_read(uint32_t addr, uint8_t *data, int length)
     return received;
 }
 //-----------------------------------------------------------------
-// ftdi_hw_mem_write_word:
-//-----------------------------------------------------------------
-int ftdi_hw_mem_write_word(uint32_t addr, uint32_t data)
-{
-    uint8_t buffer[4];
-
-    buffer[3] = (data >> 24);
-    buffer[2] = (data >> 16);
-    buffer[1] = (data >> 8);
-    buffer[0] = (data >> 0);
-
-    return ftdi_hw_mem_write(addr, buffer, 4);
-}
-//-----------------------------------------------------------------
-// ftdi_hw_mem_read_word:
-//-----------------------------------------------------------------
-int ftdi_hw_mem_read_word(uint32_t addr, uint32_t *data)
-{
-    uint8_t buffer[4];
-
-    int res = ftdi_hw_mem_read(addr, buffer, 4);
-    if (res > 0)
-    {
-        (*data) = ((uint32_t)buffer[3]) << 24;
-        (*data)|= ((uint32_t)buffer[2]) << 16;
-        (*data)|= ((uint32_t)buffer[1]) << 8;
-        (*data)|= ((uint32_t)buffer[0]) << 0;
-    }
-    return res;
-}
-//-----------------------------------------------------------------
 // ftdi_hw_gpio_write:
 //-----------------------------------------------------------------
 int ftdi_hw_gpio_write(uint8_t value)
