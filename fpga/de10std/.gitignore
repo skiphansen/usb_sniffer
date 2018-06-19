@@ -1,4 +1,5 @@
 *.bak
+*.cdf
 *.cof
 *.done
 *.jdi
@@ -11,6 +12,7 @@
 *.sld
 *.smsg
 *.sof
+*.stp
 *.summary
 /c5_pin_model_dump.txt
 /db/
