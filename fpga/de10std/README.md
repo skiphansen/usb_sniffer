@@ -10,10 +10,13 @@ But the idea of this project is not to develop a production ready USB analyzer. 
 - do not diverge much from the original usb_sniffer for Xilinx board.
 
 For this project you need USB3300 physics board from Waveshare http://www.waveshare.com/wiki/USB3300_USB_HS_Board. 
-It should be connected to the GPIO header of the DE10 board using short enough custom ribbon cable.
+It should be connected to the GPIO header of the DE10 board using custom IDC socket soldered on USB3300 board.
 
-It was reported by the developer of the original usb_sniffer project that if ribbon cable is too long than we start getting CRC errors.
-Also it was found that if use jump wires for connection of USB3300 board and FPGA devkit than setup becomes unstable: sometimes it works but sometimes it fails to catch most of the usb transactions.
+In original usb_sniffer project custom ribbon cable was used to connect USB3300 board with FPGA board.
+Also it was reported by the developer of the original usb_sniffer project that if ribbon cable is too long than we start getting CRC errors.
+
+It was found that if use jump wires for connection of USB3300 board and FPGA devkit than setup becomes unstable: sometimes it works but sometimes it fails to catch most of the usb transactions.
+In our case use of even a short custom ribbon cable was not successfull: 30-80% USB transaction contained CRC errors.
 
 Function block diagram of the original usb_sniffer for Xilinx board
 -------------------------------------------------------------------
@@ -40,7 +43,7 @@ Design contains two glue layers:
 
 Function block diagram of usb_sniffer ported to Altera board
 ------------------------------------------------------------
-![Function block diagram of the original usb_sniffer for Altera board](https://docs.google.com/drawings/d/e/2PACX-1vSUDRjN3C05SjN_P9RtSH-UBQV4g9_JiiaN0X7dQhl8xKILRhi3aC6a9j1CvEvMoBTGofC5ZBQSFzSP/pub?w=960&h=720)
+![Function block diagram of the original usb_sniffer for Altera board](https://docs.google.com/drawings/d/e/2PACX-1vQw8YgYYuHD74eRaG5VcVZRgxSAFIj5FpQxP5dLPr4X7N4V41tm6qu7weWR-61KlRzd7NN26L1YRC7-/pub?w=901&h=345)
 
 Comparing to the Xilinx version we do not use FTDI microchip capabilities for communication of software and hardware parts because it is not available on our board.
 Instead of that we use JTAG to Avalon master bridge IP core.
@@ -52,26 +55,11 @@ To make this work togather with existing usb_sniffer software written in C we ha
 We use External Bus to Avalon Bridge (ram_bridge) and Avalon to External Bus Bridge (periph_bridge) IP cores which simplify creation of Avalon bus masters and slaves in Verilog.
 In fact this bridges are connected to the corresponding Wishbone buses.
 
-Making custom ribbon cable
---------------------------
+Connecting USB3300 and FPGA board
+---------------------------------
+To connect USB3300 and FPGA board we use 2x10 IDC socket soldered to USB3300 board instead of original 2x10 IDC male connector on this board.
 
-Components:
-
-- 20 pin ribbon cable
-- 2x20 IDC female connector
-- 2x10 IDC female connector
-
-1. At first remove last two wires from the ribbon cable because they are not need.
-2. Connect ribbon cable to the 2x20 IDC connector.
-   For this put the cable in the connector and make sure that first pin mark on the cable and on the connector match.
-   First 12 pins on the 2x20 IDC connector should be skipped so that first wire on the ribbon cable corresponds to the GPIO_D10.
-3. Other side of the ribbon cable should be cutted in the following way:
-   - wires 2 and 4 should be short enough to not be connected in the 2x10 IDC connector (they correspond to the 5V voltage supply pins on the USB3300 board and we do not want them to be connected to the I/O pins of FPGA)
-   - wire 17 should be a little bit longer
-4. Put wires 1, 3, 5 ... 16, 18 in the IDC connector and press on the connector header to make a connection. While this wires 2 and 4 should be unconnected and wire 17 should be floating as described above.
-5. Remove 2x10 IDC connector header and put wire 17 to the last pin (3.3V) of the 2x10 IDC connector and assemble the connector again.
-
-When connecting everything togather make sure that first pin markers on every part match.
+During soldering of IDC connector to USB3300, pins 2 and 4 should be removed, and pin 17 should be curved and soldered to pin 19 on USB3300 board.
 After that USB3300 board and DE-10 should be connected accroding to table
 
 | USB3300 Board | CN1 pin | JP1 pin | DE-10 2x20 GPIO | FPGA pin |
@@ -116,7 +104,7 @@ or use any other valid command line options. Only `-i socket` option is required
 
 iti1480a-display application can be used producing formatted output.
 
-![Imgur](https://i.imgur.com/G2KzCMT.png)
+![Imgur](https://imgur.com/GocTLVS.png)
 
 Note that if you connect full speed or low speed device than make sure to add correct speed configuration to usb_sniffer using `-u` flag.
 
@@ -193,12 +181,14 @@ Commits:
 
 Known issues and improvements
 -----------------------------
-- Currently there is a lot of CRC errors detected for a unknown reason.
+In future this design can be improved in many ways:
 
-Also in future this design can be improved in the following ways:
+- software part dependency on Quartus System Console
+- performance improvements:
 
-- in usb_sniffer.v for storing data FIFO IP core interface can be utilized instead of custom FIFO implementation in usb_sniffer.v
-- more than 64Kb of onchip ram can be allocated
-- FPGA SDRAM can be used
-- HPS can be used
+  - in usb_sniffer.v for storing data FIFO IP core interface can be utilized instead of custom FIFO implementation in usb_sniffer.v
+  - more than 64Kb of onchip ram can be allocated
+  - FPGA SDRAM can be used
+  - HPS can be used
+
 - more filtering conditions can be implemented
