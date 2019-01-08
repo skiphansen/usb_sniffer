@@ -89,6 +89,8 @@ After that USB3300 board and DE-10 should be connected accroding to table
 | DATA5         | 11      | 23      | GPIO[20]        | PIN_AF8  |
 | DATA6         | 13      | 25      | GPIO[22]        | PIN_AF10 |
 | DATA7         | 15      | 27      | GPIO[24]        | PIN_AE9  |
+| 3.3V          | 19      | 29      | VCC3P3          |          |
+| GND           | 17      | 30      | GND             |          |
 
 Building and running existing design
 ------------------------------------
