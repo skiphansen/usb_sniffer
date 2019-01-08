@@ -57,26 +57,40 @@ In fact this bridges are connected to the corresponding Wishbone buses.
 
 Connecting USB3300 and FPGA board
 ---------------------------------
-To connect USB3300 and FPGA board we use 2x10 IDC socket soldered to USB3300 board instead of original 2x10 IDC male connector on this board.
+To connect USB3300 and FPGA board we use specialized bridge board whose schematic
+is in hw/de10std/usb_sniffer_bridge folder.
 
-During soldering of IDC connector to USB3300, pins 2 and 4 should be removed, and pin 17 should be curved and soldered to pin 19 on USB3300 board.
+![Imgur](https://i.imgur.com/6bgy6VJ.png?1)
+
+This custom board is required because using custom ribbon cable to connect USB3300
+board and FPGA board results in unstable connection.
+More precisely, if we use ribbon cable then we get USB CRC errors in sniffed data.
+
+When connecting FPGA board with USB sniffer bridge board and with USB3300 board
+make sure that first pin marks match:
+
+1. First pin on the FPGA board JP1 connector matches first pin on the bridge board
+   JP1 connector.
+2. First pin on the bridge board JP2 connector matches first pin on the USB3300
+   board CN1 connector.
+
 After that USB3300 board and DE-10 should be connected accroding to table
 
 | USB3300 Board | CN1 pin | JP1 pin | DE-10 2x20 GPIO | FPGA pin |
 | ------------- | ------- | ------- | --------------- | -------- |
-| RST           |  8      | 20      | GPIO[17]        | PIN_AF4  |
-| CLK           | 10      | 22      | GPIO[19]        | PIN_AF6  |
-| DIR           | 12      | 24      | GPIO[21]        | PIN_AF9  |
-| NXT           | 14      | 26      | GPIO[23]        | PIN_AE7  |
-| STP           | 16      | 28      | GPIO[25]        | PIN_AE11 |
-| DATA0         |  1      | 13      | GPIO[10]        | PIN_AG1  |
-| DATA1         |  3      | 15      | GPIO[12]        | PIN_AG3  |
-| DATA2         |  5      | 17      | GPIO[14]        | PIN_AG6  |
-| DATA3         |  7      | 19      | GPIO[16]        | PIN_AG8  |
-| DATA4         |  9      | 21      | GPIO[18]        | PIN_AF5  |
-| DATA5         | 11      | 23      | GPIO[20]        | PIN_AF8  |
-| DATA6         | 13      | 25      | GPIO[22]        | PIN_AF10 |
-| DATA7         | 15      | 27      | GPIO[24]        | PIN_AE9  |
+| RST           |  8      | 19      | GPIO[16]        | PIN_AG8  |
+| CLK           | 10      | 21      | GPIO[18]        | PIN_AF5  |
+| DIR           | 12      | 23      | GPIO[20]        | PIN_AF8  |
+| NXT           | 14      | 25      | GPIO[22]        | PIN_AF10 |
+| STP           | 16      | 27      | GPIO[24]        | PIN_AE9  |
+| DATA0         |  1      | 14      | GPIO[11]        | PIN_AG2  |
+| DATA1         |  3      | 16      | GPIO[13]        | PIN_AG5  |
+| DATA2         |  5      | 18      | GPIO[15]        | PIN_AG7  |
+| DATA3         |  7      | 20      | GPIO[17]        | PIN_AF4  |
+| DATA4         |  9      | 22      | GPIO[19]        | PIN_AF6  |
+| DATA5         | 11      | 24      | GPIO[21]        | PIN_AF9  |
+| DATA6         | 13      | 26      | GPIO[23]        | PIN_AE7  |
+| DATA7         | 15      | 28      | GPIO[25]        | PIN_AE11 |
 | 3.3V          | 19      | 29      | VCC3P3          |          |
 | GND           | 17      | 30      | GND             |          |
 
