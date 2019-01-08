@@ -94,6 +94,15 @@ After that USB3300 board and DE-10 should be connected accroding to table
 | 3.3V          | 19      | 29      | VCC3P3          |          |
 | GND           | 17      | 30      | GND             |          |
 
+It is important to have FPGA design on EPCS device which correctly configures
+FPGA pins connected to USB3300 board until USB3300 3.3V power is enabled.
+Otherwise USB3300 will initialize and get invalid data from FPGA over ULPI bus
+and as result it will go to invalid state.
+According to USB3300 datasheet only way to fully reset USB3300 is power-cycle.
+
+Another solutions are: hot-plugging USB3300 when FPGA board is already configured,
+or implementing transistor switch on the bridge board to enable 3.3V power programmatically.
+
 Building and running existing design
 ------------------------------------
 We describe how to build hardware and software part of usb_sniffer project from sources.
@@ -104,7 +113,7 @@ We describe how to build hardware and software part of usb_sniffer project from 
 
 For running usb_sniffer you need:
 
-1. Program usb sniffer FPGA design.
+1. Program USB sniffer FPGA design on EPCS device.
 2. Enter `usb_sniffer/fpga/de10std/` directory. Run system console proxy from it
 
        nios2_command_shell.sh system-console --script=system_console.tcl
