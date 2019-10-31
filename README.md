@@ -1,6 +1,8 @@
 ## USB Sniffer
 High Speed USB 2.0 capture device based on miniSpartan6+
 
+(See [README.md](./fpga/panologic_g2/README.md) for the reason for this fork)
+
 Homepage: [http://ultra-embedded.com/usb_sniffer](http://ultra-embedded.com/usb_sniffer)  
 Github:   [http://github.com/ultraembedded/usb_sniffer](http://github.com/ultraembedded/usb_sniffer)
 
