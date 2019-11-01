@@ -1,11 +1,10 @@
 PROJECT=pano
-PART=xc6slx9-ftg256-3
+PART=xc6slx150-2-fgg484
 CABLE ?= ftdi
 
 TOOL_PATH ?= /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
 CORES_PATH = ../../cores
 RTL_ROOT   = ${CORES_PATH}/usb_sniffer/rtl
-FTDI_PATH  = ${CORES_PATH}/ftdi_async_bridge/rtl
 ULPI_PATH  = ${CORES_PATH}/ulpi_wrapper/rtl
 
 all: ${PROJECT}_routed.bit
@@ -14,8 +13,6 @@ project/${PROJECT}.prj:
 	mkdir -p project
 	echo "verilog work \"../top.v\"" > project/${PROJECT}.prj
 	echo "verilog work \"../top_core.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../${FTDI_PATH}/ftdi_if.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../${FTDI_PATH}/ftdi_sync.v\"" >> project/${PROJECT}.prj
 	echo "verilog work \"../${ULPI_PATH}/ulpi_wrapper.v\"" >> project/${PROJECT}.prj
 	echo "verilog work \"../${RTL_ROOT}/usb_sniffer.v\"" >> project/${PROJECT}.prj
 	echo "verilog work \"../${RTL_ROOT}/usb_sniffer_regs.v\"" >> project/${PROJECT}.prj

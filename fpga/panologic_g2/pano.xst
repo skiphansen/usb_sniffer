@@ -5,7 +5,7 @@ run
 -ifmt mixed
 -ofn pano
 -ofmt NGC
--p xc6slx9-3-ftg256
+-p xc6slx150-2-fgg484
 -top top
 -opt_mode Speed
 -opt_level 2
