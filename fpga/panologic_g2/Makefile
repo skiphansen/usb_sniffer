@@ -1,4 +1,4 @@
-PROJECT=fpga
+PROJECT=pano
 PART=xc6slx9-ftg256-3
 CABLE ?= ftdi
 
