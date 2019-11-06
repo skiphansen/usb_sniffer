@@ -6,16 +6,6 @@ generation Panologic thin client.
 If you don't know what a Panologic thin client then see [this](https://hackaday.com/2013/01/11/ask-hackaday-we-might-have-some-fpgas-to-hack/) 
 article and refer to the links at the bottom of this page for further reading.
 
-## Hardware differences from orignal project.
-
-The usb_sniffer project was originally developed for the miniSpartan6+ board 
-interfaced to an external USB3300.  The miniSpartan6+'s FT2232H USB interface 
-was used to transfer captured data to a PC.  
-
-The Panologic device is based on a larger device from the same Spartan 6 
-family as the miniSpartan6+ and it already has a USB3300.  The Pano device 
-doesn't have an FT2232H interface, but it does have gigabit Ethernet.
-
 ## Status
 
 This project is in the planning stage. As you can see below the hardware is in 
@@ -28,7 +18,15 @@ pretty useless.
 It is my hope that this project will attract others that may be interested in
 helping.
 
-## Transferring captured data
+## Hardware differences from orignal project.
+
+The usb_sniffer project was originally developed for the miniSpartan6+ board 
+interfaced to an external USB3300.  The miniSpartan6+'s FT2232H USB interface 
+was used to transfer captured data to a PC.  
+
+The Panologic device is based on a larger device from the same Spartan 6 
+family as the miniSpartan6+ and it already has a USB3300.  The Pano device 
+doesn't have an FT2232H interface, but it does have gigabit Ethernet.
 
 Using the Ethernet port for communications will require a CPU core to run the 
 networking stack, I plan on using a RISC V.  
@@ -46,6 +44,15 @@ program to run locally on RISC V and use a serial port for a console.
 * A suitable 5 volt power supply
 * A JTAG programmer to load the bitstream into the FPGA.
 * A serial adapter compatible with 3.3v levels.
+
+## Building
+
+**NB:** While it may be possible to use Windows for development I haven't 
+tried it and don't recommend it.
+
+1. Clone https://github.com/skiphansen/usb_sniffer
+2. cd into .../usb_sniffer/fpga/panologic_g2
+3. Run Make
 
 ## HW Modifications
 
