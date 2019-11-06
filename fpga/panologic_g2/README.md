@@ -8,8 +8,8 @@ article and refer to the links at the bottom of this page for further reading.
 
 ## Status
 
-This project is in the planning stage. As you can see below the hardware is in 
-the process of being modified but the modifications have not been completed yet.  
+This project is in the planning stage. As you can see below the hardware has 
+been modified but the modifications have not been tested yet.  
 
 A skeleton project for the Pano has been created without the FT2232H interface. 
 The project synthesizes and generates a bit file, but without an interface it's 
@@ -71,11 +71,6 @@ appropriate HDL and software.
 3. Remove the USB hub chip U7 using hot air gun.
 4. Jumper USB data plus pins U7.2, U7.4, and U7.43.
 5. Jumper USB data minus pins U7.1, U7.3, and U7.42.
-6. Jumper USB VBUS enable U7.22 to U7.15.
-7. Connect serial console Txd and Rxd to one of USB connectors next to the DVI
-port (details TBD).
-8. Create and adapter from the rewired USB connector to a 3.3v serial adapter
-(details TBD).
 
 Step 3 is the hardest part by far.  The USB2514 chip has a large thermal ground 
 pad on the bottom of the chip which makes it difficult to remove.  A hot air gun
@@ -100,6 +95,11 @@ After removing it:
 After cleaning the pads and removing the tape:
 
 ![](./assets/u7_cleaned.png) 
+
+After adding jumpers:
+
+![](./assets/u7_jumpers.png) 
+
 
 The fact that the Pano still runs is a GOOD sign, stay tuned !
 
