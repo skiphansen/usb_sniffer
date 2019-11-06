@@ -1,5 +1,5 @@
 PROJECT=fpga
-PART=xc6slx9-ftg256-3
+PART=xc6slx150-2-fgg484
 CABLE ?= ftdi
 
 TOOL_PATH ?= /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
