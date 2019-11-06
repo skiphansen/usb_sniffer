@@ -6,10 +6,11 @@ TOOL_PATH ?= /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
 CORES_PATH = ../../cores
 RTL_ROOT   = ${CORES_PATH}/usb_sniffer/rtl
 ULPI_PATH  = ${CORES_PATH}/ulpi_wrapper/rtl
+CORES_README = ${CORES_PATH}/README.md
 
-all: ${PROJECT}_routed.bit
+all: ${CORES_README} ${PROJECT}_routed.bit
 
-project/${PROJECT}.prj: 
+project/${PROJECT}.prj:
 	mkdir -p project
 	echo "verilog work \"../top.v\"" > project/${PROJECT}.prj
 	echo "verilog work \"../top_core.v\"" >> project/${PROJECT}.prj
@@ -38,6 +39,10 @@ ${PROJECT}_routed.ncd: ${PROJECT}.ncd
 
 ${PROJECT}_routed.bit: ${PROJECT}_routed.ncd
 	cd project; ${TOOL_PATH}/bitgen -f ${PROJECT}.ut ${PROJECT}_routed.ncd
+
+${CORES_README}:
+	git submodule init
+	git submodule update
 
 load:
 	sudo xc3prog/xc3sprog -c ${CABLE} project/${PROJECT}_routed.bit
