@@ -6,9 +6,9 @@
 //--------------------------------------------------------------------
 typedef enum
 {
-	USB_SPEED_HS,
-	USB_SPEED_FS,
-	USB_SPEED_LS
+   USB_SPEED_HS,
+   USB_SPEED_FS,
+   USB_SPEED_LS
 } tUsbSpeed;
 
 //--------------------------------------------------------------------
@@ -39,6 +39,7 @@ int usb_sniffer_set_rd_ptr(uint32_t addr);
 int usb_sniffer_get_buffer(uint8_t *buffer, int buffer_size);
 int usb_sniffer_read_buffer(uint8_t *buffer, uint32_t base, int size);
 int usb_sniffer_extract_buffer(FILE *f, uint32_t rd_ptr, uint32_t size);
+int interface_test(void);
 
 #ifdef __cplusplus
 }

@@ -8,11 +8,11 @@ module top_core
     input           rst_i,
   
     // ULPI Interface
-    input  [7:0]    ulpi_data_i,
-    output [7:0]    ulpi_data_o,
-    input           ulpi_dir_i,
-    input           ulpi_nxt_i,
-    output          ulpi_stp_o,
+    (* keep = "true" *) (* s = "true" *) input  [7:0]    ulpi_data_i,
+    (* keep = "true" *) (* s = "true" *) output [7:0]    ulpi_data_o,
+    (* keep = "true" *) (* s = "true" *) input           ulpi_dir_i,
+    (* keep = "true" *) (* s = "true" *) input           ulpi_nxt_i,
+    (* keep = "true" *) (* s = "true" *) output          ulpi_stp_o,
 
     // FTDI
     inout           ftdi_rxf,

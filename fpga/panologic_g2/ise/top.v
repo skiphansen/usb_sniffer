@@ -25,7 +25,8 @@ module top
  // Ethernet PHY
     output GMII_RST_N,
 
-    output led_blue
+    output led_blue,
+    input pano_button
 );
 
 //-----------------------------------------------------------------
@@ -93,25 +94,37 @@ ODDR2 clkout1_buf (
     .Q(usb_clk)
 );
 
-
 //-----------------------------------------------------------------
 // Reset
 //-----------------------------------------------------------------
 reg reset       = 1'b1;
 reg rst_next    = 1'b1;
 
+(* mark_debug = "TRUE" *) wire debug_reset;
+assign debug_reset = reset;
+
 always @(posedge USB_CLK60G) 
-if (rst_next == 1'b0)
+if (pano_button == 1'b0) begin
+    reset       <= 1'b1;
+    rst_next    <= 1'b1;
+end else if (rst_next == 1'b0)
     reset       <= 1'b0;
 else 
     rst_next    <= 1'b0;
 
+assign ulpi_reset = reset;
+// assign ulpi_reset = 1'b1;
+
+
 //-----------------------------------------------------------------
 // IO Primitives
 //-----------------------------------------------------------------
-wire [7:0] ulpi_out_w;
-wire [7:0] ulpi_in_w;
+(* KEEP = "TRUE" *) (* S = "TRUE" *) wire [7:0] ulpi_out_w;
+(* mark_debug = "TRUE" *) (* KEEP = "TRUE" *) (* S = "TRUE" *) wire [7:0] ulpi_in_w;
 wire       ulpi_stp_w;
+
+(* mark_debug = "TRUE" *) wire [7:0] debug_in_w;
+assign debug_in_w = ulpi_in_w;
 
 genvar i;
 generate  
@@ -179,7 +192,6 @@ u_core
 // Must remove reset from the Ethernet Phy for 125 Mhz input clock.
 // See https://github.com/tomverbeure/panologic-g2
 assign GMII_RST_N = 1'b1;
-assign ulpi_reset = 1'b0;
 
 ODDR2 test_buf (
     .D0(1'b1),

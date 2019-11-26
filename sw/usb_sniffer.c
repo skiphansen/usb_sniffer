@@ -431,3 +431,93 @@ int usb_sniffer_extract_buffer(FILE *f, uint32_t rd_ptr, uint32_t size)
     buffer = NULL;
     return err ? -1 : size;
 }
+
+//-----------------------------------------------------------------
+// interface_test: test hardware interface
+//-----------------------------------------------------------------
+int interface_test()
+{
+   int Ret = 0;
+   uint32_t status;
+   uint32_t config;
+   uint32_t test_bit = 1;
+   uint32_t test_readback;
+   int i;
+   int Err;
+
+   do {
+#if 1
+      if (hw_mem_read_word(CFG_BASE_ADDR + USB_BUFFER_CFG, &config) != sizeof(uint32_t))
+      {
+          printf("ERROR: Failed to read config, %d\n",Err);
+          Ret = Err;
+          break;
+      }
+      printf("config: 0x%x\n",config);
+
+      if (hw_mem_read_word(CFG_BASE_ADDR + USB_BUFFER_BASE, &status) != sizeof(uint32_t))
+      {
+          printf("ERROR: Failed to read buffer base , %d\n",Err);
+          Ret = Err;
+          break;
+      }
+      printf("buffer base adr: 0x%x\n",status);
+
+      if (hw_mem_read_word(CFG_BASE_ADDR + USB_BUFFER_END, &status) != sizeof(uint32_t))
+      {
+          printf("ERROR: Failed to read buffer end, %d\n",Err);
+          Ret = Err;
+          break;
+      }
+      printf("buffer end adr: 0x%x\n",status);
+
+      if (hw_mem_read_word(CFG_BASE_ADDR + USB_BUFFER_CURRENT, &status) != sizeof(uint32_t))
+      {
+          printf("ERROR: Failed to read current buffer adr, %d\n",Err);
+          Ret = Err;
+          break;
+      }
+      printf("current buffer adr: 0x%x\n",status);
+
+
+      if (hw_mem_read_word(CFG_BASE_ADDR + USB_BUFFER_STS, &status) != sizeof(uint32_t))
+      {
+          printf("ERROR: Failed to read status, %d\n",Err);
+          Ret = Err;
+          break;
+      }
+      printf("status: 0x%x\n",status);
+
+#endif
+      for(i = 0; i < 32; i++) {
+
+         if (hw_mem_write_word(CFG_BASE_ADDR + USB_BUFFER_END, test_bit) != sizeof(uint32_t))
+         {
+             printf("ERROR: Failed to write USB_BUFFER_END, %d\n",Err);
+             Ret = Err;
+             break;
+         }
+
+         test_readback = 0x5555aaaa;
+         if (hw_mem_read_word(CFG_BASE_ADDR + USB_BUFFER_END, &test_readback) != sizeof(uint32_t))
+         {
+             printf("ERROR: Failed to read USB_BUFFER_END, %d\n",Err);
+             Ret = Err;
+             break;
+         }
+
+         if(test_bit != test_readback) {
+            printf("Readback failed wrote: 0x%x, read 0x%x\n",test_bit,test_readback);
+            Ret = -1;
+            break;
+         }
+         test_bit <<= 1;
+      }
+      if(i == 32) {
+         printf("Bitwalk test passed\n");
+      }
+   } while(0);
+
+   return Ret;
+}
+

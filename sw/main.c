@@ -170,8 +170,9 @@ int main(int argc, char *argv[])
     int decode_log_file = 0;
     int inverse_match = 0;
     tUsbSpeed speed = USB_SPEED_HS;
+    int do_test = 0;
     
-    while ((c = getopt (argc, argv, "d:e:slf:nu:i:")) != -1)
+    while ((c = getopt (argc, argv, "d:e:slf:nu:i:t")) != -1)
     {
         switch(c)
         {
@@ -217,6 +218,9 @@ int main(int argc, char *argv[])
                     help = 1;
                 }
                 break;
+            case 't':   // Test interface
+                do_test = 1;
+                break;
             default:
                 help = 1;
                 break;
@@ -242,6 +246,10 @@ int main(int argc, char *argv[])
     {
         fprintf(stderr, "Error: Cannot access HW, try SUDOing\n");
         return -1;
+    }
+
+    if (do_test) {
+       return interface_test();
     }
 
     // Disable probe

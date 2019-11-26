@@ -48,7 +48,7 @@ ${CORES_README}:
 	git submodule update
 
 load:
-	xc3sprog -c ${CABLE} project/${PROJECT}_routed.bit
+	xc3sprog -c ${CABLE} work/top.bit
 
 clean:
 	@rm -rf project

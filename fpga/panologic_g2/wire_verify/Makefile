@@ -1,27 +1,16 @@
-PROJECT=pano
+PROJECT=wire_verify
 PART=xc6slx150-2-fgg484
 CABLE ?= jtaghs2
 
 TOOL_PATH ?= /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64
 CORES_PATH = ../../cores
-RTL_ROOT   = ${CORES_PATH}/usb_sniffer/rtl
-FTDI_PATH  = ${CORES_PATH}/ftdi_async_bridge/rtl
-ULPI_PATH  = ${CORES_PATH}/ulpi_wrapper/rtl
 CORES_README = ${CORES_PATH}/README.md
 
 all: ${CORES_README} ${PROJECT}_routed.bit
 
 project/${PROJECT}.prj:
 	mkdir -p project
-	echo "verilog work \"../top.v\"" > project/${PROJECT}.prj
-	echo "verilog work \"../top_core.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../${FTDI_PATH}/ftdi_if.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../${FTDI_PATH}/ftdi_sync.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../${ULPI_PATH}/ulpi_wrapper.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../${RTL_ROOT}/usb_sniffer.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../${RTL_ROOT}/usb_sniffer_regs.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../ram_wb.v\"" >> project/${PROJECT}.prj
-	echo "verilog work \"../clkgen_pll.v\"" >> project/${PROJECT}.prj
+	echo "verilog work \"../${PROJECT}.v\"" >> project/${PROJECT}.prj
 
 ${PROJECT}.ngc: project/${PROJECT}.prj	
 	cp ${PROJECT}.* project/

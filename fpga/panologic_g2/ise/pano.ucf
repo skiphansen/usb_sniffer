@@ -50,6 +50,10 @@ NET  "USB_ULPI_NXT"             IOSTANDARD = LVCMOS33;
 NET  "USB_ULPI_DIR"             IOSTANDARD = LVCMOS33;
 NET  "USB_CLK60"                IOSTANDARD = LVCMOS33;
 
+# needed for chip scope clocks
+PIN "u_pll/BUFG_OUT.O" CLOCK_DEDICATED_ROUTE = FALSE;
+PIN "clk24_buf.O" CLOCK_DEDICATED_ROUTE = FALSE;
+
 # FTDI - connected to DVI signals
 NET "FTDI_RXF"   LOC="B14" | IOSTANDARD=LVTTL;
 NET "FTDI_TXE"   LOC="E16" | IOSTANDARD=LVTTL;
@@ -76,4 +80,6 @@ NET "GMII_RST_N" LOC = R11 | IOSTANDARD = LVCMOS33;
 #NET "led_red"               LOC = E12 | IOSTANDARD = LVCMOS33;
 NET "led_blue"              LOC = H13 | IOSTANDARD = LVCMOS33;
 #NET "led_green"             LOC = F13 | IOSTANDARD = LVCMOS33;
+
+NET "pano_button"           LOC = H12 | IOSTANDARD = LVCMOS33;
 

@@ -72,7 +72,8 @@ int ftdi_hw_init(void)
     status = ftdi_usb_open(_handle, 0x0403, 0x6010);
     if (status != 0)
     {
-        ftdi_usb_close(_handle);
+       printf("ftdi_usb_open returned %d\n",status);
+//        ftdi_usb_close(_handle);
         ftdi_free(_handle);
         _handle = NULL;
         return -1;
@@ -206,6 +207,7 @@ int ftdi_hw_mem_read(uint32_t addr, uint8_t *data, int length)
         *p++ = (addr >> 0);
 
         // Write request to FTDI device
+//         printf("%s: calling ftdi_write_data\n",__FUNCTION__);
         res = ftdi_write_data(_handle, buffer, HDR_SIZE);
         if (res != HDR_SIZE)
         {
@@ -216,12 +218,14 @@ int ftdi_hw_mem_read(uint32_t addr, uint8_t *data, int length)
         remain = size;
         do
         {
+//            printf("%s: calling ftdi_read_data",__FUNCTION__);
             res = ftdi_read_data(_handle, data, remain);
             if (res < 0)
             {
                 fprintf(stderr, "ftdi_hw_mem_read: Failed to read data\n");
                 return -1;
             }
+//            printf(", res %d\n",res);
 
             remain -= res;
             data += res;
