@@ -41,16 +41,16 @@ appropriate HDL and software.
 
 ## FT2232H Interface
 
-Initially I didn't think adding an FT2232H interface to the Pano was an viable 
+Initially I didn't think adding an FT2232H interface to the Pano was a viable 
 option, however after some further thought I figured out a practical way it 
 could be done.  Since we don't need a monitor for the sniffer the video signals
 could be repurposed for interfacing with an external FT2322 module.  
 
-Since all of the video signal for the Chrontel DVI transmitter chip must cross 
+Since all of the video signals for the Chrontel DVI transmitter chip must cross 
 from the FPGA board to the power board they are all present on the board 
 to board connector.  Soldering to the board to board connector is MUCH easier 
 than soldering to tiny traces or component leads.  Additionally since only 
-input signals to the Chrontel DVI transmitter chip will be needed won't even 
+input signals to the Chrontel DVI transmitter chip will be needed we won't even 
 need to remove the chip.  
 
 If you an anxious for an USB sniffer and don't want to wait for the planned
@@ -86,12 +86,12 @@ If you an anxious for an USB sniffer and don't want to wait for the planned
 
 When I connected the FT2232H module to the Pano I used "spectrastrip" ribbon 
 cable with color coded wires to make identifying the correct wires easier.
-Once I had finished the wiring I created simple bit file that generated square 
-waves of unique frequencies on each of the interface pins to allow the 
+Once I had finished the wiring I created a simple bit file that generated 
+square waves of unique frequencies on each of the interface pins to allow the 
 connections to be verified with a scope rather than trying to use an ohm meter.
 
-Knowing the color code and having done used a similar connection schemes many 
-time before I knew that pin one would be brown, pin 2 red, etc....  
+Knowing the color code and having used a similar connection schemes many time 
+before I knew that pin one would be brown, pin 2 red, etc....  
 
 **WRONG, WRONG WRONG !!!**
 
@@ -107,7 +107,7 @@ smoke out" of the FT2232H module when I powered it up after I had carefully
 FT2232 module not so much.  
 
 When I had "buzzed out" my connections I had intentionally used a pin header
-rather than the actual module to play it safe, so much of safety.  Note to
+rather than the actual module to play it safe, so much for safety.  Note to
 self, ALWAY ohm out at least the power connections to the actual board.
 
 Happily none of the data connections needed to be redone since those could be
@@ -118,8 +118,8 @@ inside of the module.
 ## FT2232H Interface configuration
 
 Surprisingly (at least to me) the FT2232H operation mode is not set simply by 
-software it is set by an EEPROM attached to the chip.  Out of the box my 
-FT2232H module was programmed for the dual asynchronous serial interface 
+software instead it is set by an EEPROM attached to the chip.  Out of the box 
+my FT2232H module was programmed for the dual asynchronous serial interface 
 mode rather than the required "ASYNC 245 FIFO" mode. I used the [FT_PROG](https://www.ftdichip.com/Support/Utilities.htm#FT_PROG) 
 Windoze utility to reprogram the EEPROM for the proper mode.  While I was at
 it I edited the manufacture and product strings so my module now identifies
@@ -176,7 +176,7 @@ After attaching ribbon cable connector to Pano with hot glue
 ![](./assets/hot_glue.png) 
 
 All ribbon cable wires connect to board to board connector pins.
-** WARNING this photo was taking prior to correcting my wiring errors described above !!!** 
+**WARNING this photo was taking prior to correcting my wiring errors described above !!!** 
 
 ![](./assets/ftdi_connector.png) 
 
