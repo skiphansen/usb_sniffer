@@ -41,6 +41,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <sys/select.h>
+#include <stdbool.h>
 
 #include "log_format.h"
 #include "usb_defs.h"
@@ -158,7 +159,7 @@ static int user_abort_check(void)
 //-----------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    char *filename = "capture.usb";
+    char *filename = "capture.bin";
     int res;
     int c;
     int help = 0;
@@ -171,6 +172,9 @@ int main(int argc, char *argv[])
     int inverse_match = 0;
     tUsbSpeed speed = USB_SPEED_HS;
     int do_test = 0;
+    char *ext;
+    bool BinFile = false;
+    FILE *fout = NULL;
     
     while ((c = getopt (argc, argv, "d:e:slf:nu:i:t")) != -1)
     {
@@ -235,8 +239,9 @@ int main(int argc, char *argv[])
         fprintf (stderr,"-u ls|fs|hs - USB speed\n");
         fprintf (stderr,"-n          - Inverse matching (exclude device / endpoint)\n");
         fprintf (stderr,"-s          - Disable SOF collection (breaks timing info)\n");
+        fprintf (stderr,"-t          - Test communications\n");
         fprintf (stderr,"-l          - One shot mode (stop on single buffer full)\n");
-        fprintf (stderr,"-f          - Capture file to either .txt, .raw, .usb (default: capture.usb)\n");
+        fprintf (stderr,"-f          - Capture file to either .txt, .raw, .usb, .bin (default: capture.bin)\n");
         fprintf (stderr,"-i ftdi|socket - Hardware interface\n");
         exit(-1);
     }
@@ -266,7 +271,13 @@ int main(int argc, char *argv[])
     uint32_t rd_ptr = 0;
     usb_sniffer_set_rd_ptr(rd_ptr);
 
-    FILE *fout = tmpfile();
+    if((ext = strrchr(filename,'.')) != NULL && strcmp(ext,".bin") == 0) {
+       BinFile = true;
+       fout = fopen(filename,"wb");
+    }
+    else {
+       fout = tmpfile();
+    }
 
     // Enable probe
     usb_sniffer_start();
@@ -351,8 +362,10 @@ int main(int argc, char *argv[])
         while (1);
     }
 
-    // Write output file
-    write_usb_file(filename, fout, speed);
+    if(!BinFile) {
+       // Write output file
+       write_usb_file(filename, fout, speed);
+    }
 
     // Close temp file
     fclose(fout);
